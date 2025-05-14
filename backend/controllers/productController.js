@@ -29,7 +29,7 @@ export const getAllProducts = async (req, res) => {
         if (minPrice || maxPrice) query.price = { ...(minPrice && { $gte: minPrice }), ...(maxPrice && { $lte: maxPrice }) };
 
         const products = await Product.find(query).sort({ createdAt: -1 });
-        res.json(products);
+        res.status(200).json(products);
     } catch(error){
         console.log(error);
         res.status(500).json({ message: "Error fetching products" });
@@ -42,7 +42,7 @@ export const getProduct = async (req, res) => {
 
         if(!product) return res.status(400).json({ message: 'Product not found' });
 
-        res.join(product);
+        res.status(200).json(product);
     } catch(error){
         console.log(error);
         res.status(500).json({ message: 'Error fetching product' });
@@ -51,7 +51,8 @@ export const getProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
     try{
-        const product = await Product.findOne({ slug: req.params.slug });
+        const slug = req.params.slug;
+        const product = await Product.findOne({ slug });
 
         if(!product) return res.status(400).json({ message: 'Product not found' });
 
@@ -62,7 +63,7 @@ export const updateProduct = async (req, res) => {
         const updated = await Product.findOneAndUpdate({ slug }, updates, { new: true });
         if(!updated) return res.status(400).json({ message: 'Product not found' });
 
-        res.status(updated);
+        res.status(200).json(updated);
     } catch(error){
         console.log(error);
         res.status(500).json({ message: 'Error fetching product' });

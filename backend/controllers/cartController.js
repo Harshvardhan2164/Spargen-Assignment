@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import Cart from '../models/cart.js';
 import Product from '../models/product.js';
-import product from '../models/product.js';
 
 export const getCart = async (req, res) => {
     try{
@@ -58,7 +57,7 @@ export const addToCart = async (req, res) => {
 export const removeItem = async (req, res) => {
     try{
         const user = req.user.id;
-        const { productId } = req.params.id;
+        const { productId } = req.params;
         const cart = await Cart.findOne({ user });
 
         if(!cart) return res.status(400).json({ message: 'Cart not found' });
@@ -75,6 +74,7 @@ export const removeItem = async (req, res) => {
 
 export const clearCart = async (req, res) => {
     try{
+        const user = req.user.id;
         const cart = await Cart.findOneAndUpdate(
             { user },
             { items: [] },
@@ -93,6 +93,7 @@ export const checkoutCart = async (req, res) => {
     session.startTransaction();
 
     try{
+        const user = req.user.id;
         const cart = await Cart.findOne({ user }).populate('items.product');
 
         if(!cart || cart.items.length === 0){
