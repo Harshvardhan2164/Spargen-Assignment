@@ -59,6 +59,7 @@ export const updateProduct = async (req, res) => {
         const updates = req.body;
 
         if(updates.name) updates.slug = slugify(updates.name, { lower: true });
+        if(updates.reviews) updates.numReviews = updates.reviews.length;
 
         const updated = await Product.findOneAndUpdate({ slug }, updates, { new: true });
         if(!updated) return res.status(400).json({ message: 'Product not found' });

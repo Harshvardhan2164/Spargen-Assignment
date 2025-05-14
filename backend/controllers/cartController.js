@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import Cart from '../models/cart.js';
 import Product from '../models/product.js';
+import Order from '../models/order.js';
 
 export const getCart = async (req, res) => {
     try{
@@ -94,12 +95,20 @@ export const checkoutCart = async (req, res) => {
 
     try{
         const user = req.user.id;
-        const cart = await Cart.findOne({ user }).populate('items.product');
+        const { shippingAddress, paymentMethod } = req.body;
+        let status = 'Pending';
 
+        const cart = await Cart.findOne({ user }).populate('items.product');
+        
         if(!cart || cart.items.length === 0){
             await session.endSession();
             return res.status(400).json({ message: 'Cart is empty' });
         }
+        
+        let totalAmount = 0;
+        const orderItems = [];
+        if(paymentMethod !== 'COD')
+            status = 'Paid';
 
         for(let item of cart.items){
             const product = await Product.findById(item.product._id).session(session);
@@ -110,8 +119,26 @@ export const checkoutCart = async (req, res) => {
             }
 
             product.stock -= item.quantity;
-            await product.save();
+            await product.save({ session });
+
+            orderItems.push({
+                product: product._id,
+                quantity: item.quantity
+            });
+
+            totalAmount += item.quantity * product.price;
         }
+
+        const order = new Order({
+            user,
+            items: orderItems,
+            shippingAddress,
+            totalAmount,
+            paymentMethod,
+            paymentStatus: status,
+        });
+
+        await order.save({ session });
 
         cart.items = [];
         await cart.save({ session });
