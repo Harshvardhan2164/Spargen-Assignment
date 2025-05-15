@@ -6,6 +6,8 @@ import cors from 'cors';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+import wishlistRoutes from './routes/wishlistRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -18,6 +20,8 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/order", orderRoutes);
+app.use("/api/wishlist", wishlistRoutes);
 
 // Server and Database
 const PORT = process.env.PORT || 5000;
