@@ -1,9 +1,10 @@
 import Wishlist from '../models/wishlist.js';
 import Product from '../models/product.js';
+import Cart from '../models/cart.js';
 
 export const addToWishlist = async (req, res) => {
     try{
-        const { productId } = req.params.id;
+        const { productId } = req.body;
         const user = req.user.id;
 
         const product = await Product.findById(productId);
@@ -64,5 +65,42 @@ export const removeFromWishlist = async (req, res) => {
     } catch(error){
         console.log(error);
         res.status(500).json({ message: 'Error removing product from wishlist' });
+    }
+};
+
+export const moveToCart = async (req, res) => {
+    try{
+        const user = req.user.id;
+        const { productId } = req.body;
+
+        const product = await Product.findById(productId);
+
+        if(!product) return res.status(400).json({ message: 'Product not found' });
+
+        const wishlist = await Wishlist.findOne({ user });
+        if(wishlist){
+            wishlist.items = wishlist.items.filter(item => item.product.toString() !== productId);
+            await wishlist.save();
+        }
+
+        let cart = await Cart.findOne({ user });
+        if(!cart){
+            cart = new Cart({ user, items: [] });
+        }
+
+        const exists = cart.items.find(item => item.product.toString() === productId);
+        if(exists){
+            exists.quantity += 1;
+        }
+        else{
+            cart.items.push({ product: productId, quantity: 1 });
+        }
+
+        await cart.save();
+
+        res.status(200).json({ message: 'Moved to cart successfully' });
+    } catch(error){
+        console.log(error);
+        res.status(500).json({ message: 'Error moving to cart' });
     }
 };
