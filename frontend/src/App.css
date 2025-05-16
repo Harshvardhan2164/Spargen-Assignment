@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+/* Root Variables */
+:root {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  
+  color-scheme: dark;
+  color: #fff;
+  background-color: #14181c;
+  
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.nav-img {
+  height: 48px;
+}
+
+/* Body Styling */
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #252c36;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+
+/* Buttons */
+button {
+  border-radius: 8px;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  /* color: white; */
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+ 
+button:focus,
+button:focus-visible {
+  outline: 3px solid #3b82f6;
+}
+
+/* Input Fields */
+input, textarea, select {
+  @apply bg-gray-800 text-white border border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+/* Cards & Containers */
+.card-container {
+  background-color: rgba(24, 24, 27, 0.4);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.card-container:hover {
+  background-color: rgba(24, 24, 27);
+}
+
+@keyframes moveBackground {
+  0% { background-position: center 0px; }
+  50% { background-position: center 50px; }
+  100% { background-position: center 0px; }
+}
+
+.animated-bg {
+  animation: moveBackground 10s infinite linear;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  button {
+    padding: 0.6rem 1.2rem;
+  }
+}
