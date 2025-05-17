@@ -21,7 +21,7 @@ export const addProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
     try{
-        const { category, minPrice, maxPrice, search } = req.body;
+        const { category, minPrice, maxPrice, search } = req.query;
 
         let query = {};
         if (category) query.category = category;
