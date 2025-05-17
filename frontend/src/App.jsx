@@ -3,6 +3,7 @@ import RegisterUser from "./pages/Register";
 import Login from "./pages/Login";
 import ForgotPass from "./pages/ForgotPassword";
 import Home from "./pages/Home";
+import ProductDetails from './pages/ProductDetails';
 import "./App.css";
 
 function App() {
@@ -15,6 +16,8 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPass />} />
 
       <Route path="/" element={<Home />} />
+
+      <Route path="/product/:slug" element={<ProductDetails />} />
     </Routes>
   );
 };
