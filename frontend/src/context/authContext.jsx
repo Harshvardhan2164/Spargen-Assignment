@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import API from '../services/api';
+import toast from 'react-hot-toast';
 
 export const AuthContext = createContext();
 
@@ -9,6 +10,8 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem("token"));
     const [username, setUsername] = useState(localStorage.getItem("username"));
+    const [cartItems, setCartItems] = useState([]);
+    const [cartItemCount, setCartItemCount] = useState(0);
 
     const navigate = useNavigate();
 
@@ -39,7 +42,7 @@ const AuthProvider = ({ children }) => {
             setUser(decodedUser);
         } catch(error){
             console.error("Login failed.", error.response?.data?.message);
-            alert("Login failed. Please try again");
+            toast.error("Login failed. Please try again");
         }
     };
 
@@ -59,16 +62,32 @@ const AuthProvider = ({ children }) => {
                 password,
             });
 
-            alert("Password updated successfully");
+            toast.success("Password updated successfully");
             navigate("/login");
         } catch(error){
             console.error("Password update failed", error.response?.data?.message);
-            alert("Password updated failed. Please try again.");
+            toast.error("Password updated failed. Please try again.");
         }
     };
 
+    const fetchCartItemsCount = async () => {
+        try{
+            const { data } = await API.get("/cart/", { withCredentials: true });
+            console.log(data.items);
+            setCartItems(data.items);
+            const total = data.items.reduce((sum, item) => sum + item.quantity, 0);
+            setCartItemCount(total);
+        } catch(error){
+            console.error("Failed to fetch cart item count.");
+        }
+    };
+
+    useEffect(() => {
+        fetchCartItemsCount();
+    }, []);
+
     return (
-        <AuthContext.Provider value={{ user, token, login, logout, username, setUsername, forgotPass }}>
+        <AuthContext.Provider value={{ user, token, login, logout, username, setUsername, forgotPass, cartItems, cartItemCount }}>
             {children}
         </AuthContext.Provider>
     );

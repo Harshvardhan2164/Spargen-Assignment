@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import ForgotPass from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import ProductDetails from './pages/ProductDetails';
+import Cart from './pages/Cart';
+import Wishlist from './pages/Wishlist';
 import "./App.css";
 
 function App() {
@@ -18,6 +20,10 @@ function App() {
       <Route path="/" element={<Home />} />
 
       <Route path="/product/:slug" element={<ProductDetails />} />
+
+      <Route path="/cart" element={<Cart />} />
+
+      <Route path="/wishlist" element={<Wishlist />} />
     </Routes>
   );
 };

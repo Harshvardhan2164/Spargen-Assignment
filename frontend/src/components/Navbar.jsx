@@ -3,7 +3,7 @@ import { AuthContext } from "../context/authContext";
 import { useContext, useState } from "react";
 
 const Navbar = () => {
-    const { user, username, logout } = useContext(AuthContext);
+    const { user, username, logout, cartItemCount } = useContext(AuthContext);
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     return (
@@ -17,7 +17,15 @@ const Navbar = () => {
                     <Link to="/register" className="text-gray-700 dark:text-gray-200 hover:underline">Register</Link>
                 </>
                 ) : (
-                <div className="relative">
+                <div className="flex items-center gap-4 relative">
+                    <Link to="/cart" className="relative text-sm text-gray-700 dark:text-white hover:underline">
+                        🛒
+                        {cartItemCount > 0 && (
+                            <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                            {cartItemCount}
+                            </span>
+                        )}
+                    </Link>
                     <button
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                     className="text-gray-800 dark:text-white font-semibold hover:underline"
