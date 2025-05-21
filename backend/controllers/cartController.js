@@ -159,6 +159,7 @@ export const checkoutCart = async (req, res) => {
         }
 
         const order = new Order({
+            
             user,
             items: orderItems,
             shippingAddress,
@@ -175,7 +176,7 @@ export const checkoutCart = async (req, res) => {
         await session.commitTransaction();
         session.endSession();
 
-        res.status(200).json({ message: 'Checkout successful. Order placed and stock updated' });
+        res.status(200).json(order);
     } catch(error){
         await session.abortTransaction();
         session.endSession();

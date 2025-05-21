@@ -21,15 +21,17 @@ export const addProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
     try{
-        const { category, minPrice, maxPrice, search } = req.query;
+        const { category, minPrice, maxPrice, search, page = 1, limit = 10 } = req.query;
 
         let query = {};
         if (category) query.category = category;
         if (search) query.name = { $regex: search, $options: 'i' };
         if (minPrice || maxPrice) query.price = { ...(minPrice && { $gte: minPrice }), ...(maxPrice && { $lte: maxPrice }) };
 
-        const products = await Product.find(query).sort({ createdAt: -1 });
-        res.status(200).json(products);
+        const skip = (page - 1) * limit;
+
+        const [products, total] = await Promise.all([Product.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit), Product.countDocuments(query)]);
+        res.status(200).json({ products, total, page: Number(page), pages: Math.ceil(total/limit) });
     } catch(error){
         console.log(error);
         res.status(500).json({ message: "Error fetching products" });
