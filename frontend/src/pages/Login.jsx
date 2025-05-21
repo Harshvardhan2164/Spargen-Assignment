@@ -19,7 +19,7 @@ const Login = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-900 px-4">
             <div className="relative z-10 p-8 w-full max-w-md rounded-2xl shadow-xl border border-[#2e2e2e] backdrop-blur-md bg-gray-800">
-                <h2 className="text-3xl font-bold mb-6 text-center text-white tracking-wide">Welcome Back</h2>
+                <h2 className="text-3xl font-bold mb-6 text-center dark:text-white tracking-wide">Welcome Back</h2>
                 <form onSubmit={handleSubmit} className="space-y-5">
                     <input
                         type="text"

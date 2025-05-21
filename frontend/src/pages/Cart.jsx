@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import toast from "react-hot-toast";
 
 const Cart = () => {
+    const navigate = useNavigate();
     const [cart, setCart] = useState([]);
 
     const fetchCart = async () => {
@@ -36,9 +38,7 @@ const Cart = () => {
 
     const handleCheckout = async () => {
         try{
-            await API.post("/cart/checkout", {}, { withCredentials: true });
-            toast.success("Checkout complete");
-            fetchCart();
+            navigate("/checkout");
         } catch(error){
             toast.error("Checkout failed");
         }

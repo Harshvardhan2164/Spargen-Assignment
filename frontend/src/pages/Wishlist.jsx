@@ -18,6 +18,7 @@ const Wishlist = () => {
         try{
             await API.delete(`/wishlist/delete/${productId}`, { withCredentials: true });
             toast.success("Removed from wishlist");
+            fetchWishlist();
         } catch(error){
             toast.error("Remove failed");
         }

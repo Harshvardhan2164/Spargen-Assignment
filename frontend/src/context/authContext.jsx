@@ -40,6 +40,7 @@ const AuthProvider = ({ children }) => {
 
             const decodedUser = jwtDecode(userToken);
             setUser(decodedUser);
+            toast.success("Login successful");
         } catch(error){
             console.error("Login failed.", error.response?.data?.message);
             toast.error("Login failed. Please try again");

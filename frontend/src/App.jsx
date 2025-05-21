@@ -6,6 +6,9 @@ import Home from "./pages/Home";
 import ProductDetails from './pages/ProductDetails';
 import Cart from './pages/Cart';
 import Wishlist from './pages/Wishlist';
+import OrderSuccess from './pages/OrderSuccess';
+import MyOrders from './pages/MyOrders';
+import CheckoutPage from './pages/Checkout';
 import "./App.css";
 
 function App() {
@@ -24,6 +27,12 @@ function App() {
       <Route path="/cart" element={<Cart />} />
 
       <Route path="/wishlist" element={<Wishlist />} />
+
+      <Route path="/order-success/:id" element={<OrderSuccess />} />
+
+      <Route path="/orders" element={<MyOrders />} />
+
+      <Route path="/checkout" element={<CheckoutPage />} />
     </Routes>
   );
 };
