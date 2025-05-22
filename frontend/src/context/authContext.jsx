@@ -53,7 +53,7 @@ const AuthProvider = ({ children }) => {
         setToken("");
         setUser(null);
         setUsername("");
-        navigate("/login");
+        navigate("/");
     };
 
     const forgotPass = async (email, password) => {
@@ -84,8 +84,10 @@ const AuthProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        fetchCartItemsCount();
-    }, []);
+        if(user){
+            fetchCartItemsCount();
+        }
+    }, [user]);
 
     return (
         <AuthContext.Provider value={{ user, token, login, logout, username, setUsername, forgotPass, cartItems, cartItemCount }}>

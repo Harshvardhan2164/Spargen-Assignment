@@ -1,6 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -76,23 +75,22 @@ button:focus-visible {
 
 /* Form styles */
 input, textarea, select {
-  @apply focus:outline-none focus:ring-2;
+  outline: none;
   transition: all var(--transition-normal) ease-in-out;
 }
 
 input:focus, textarea:focus, select:focus {
-  --tw-ring-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-primary);
 }
 
-/* html.dark input,
-html.dark textarea,
-html.dark select {
-  @apply bg-gray-800 text-white border-gray-600;
-} */
+.category{
+  color: var(--color-text-dark);
+}
 
 /* Card styles */
 .card-container {
-  @apply transition-colors;
+  transition: colors var(--transition-normal) ease;
   background-color: var(--color-card-bg);
   transition: background-color var(--transition-normal) ease, 
               transform var(--transition-normal) ease,
@@ -120,7 +118,8 @@ html.dark .card-container:hover {
 }
 
 .navbar-category-link {
-  @apply relative py-2;
+  position: relative;
+  padding: 0.5rem 0;
   transition: color var(--transition-normal) ease;
 }
 
@@ -195,7 +194,8 @@ html.dark .btn-primary:hover {
 
 /* Icon animations */
 .icon-btn {
-  @apply p-2 rounded-full;
+  padding: 0.5rem;
+  border-radius: 9999px;
   transition: transform var(--transition-fast) ease, 
               background-color var(--transition-fast) ease;
 }
@@ -206,12 +206,14 @@ html.dark .btn-primary:hover {
 
 /* Product card styling */
 .product-card {
-  @apply overflow-hidden rounded-lg shadow-sm;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   transition: all var(--transition-normal) ease;
 }
 
 .product-card:hover {
-  @apply shadow-md;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transform: translateY(-4px);
 }
 
@@ -229,36 +231,49 @@ html.dark .btn-primary:hover {
 }
 
 .price-original {
-  @apply line-through text-gray-500;
+  text-decoration: line-through;
+  color: #6b7280;
 }
 
 .price-sale {
-  @apply text-red-600;
+  color: #dc2626;
+}
+
+html.dark .price-original {
+  color: #9ca3af;
 }
 
 html.dark .price-sale {
-  @apply text-red-400;
+  color: #f87171;
 }
 
 /* Badge styling */
 .badge {
-  @apply inline-block px-2 py-1 text-xs font-semibold rounded;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 0.25rem;
 }
 
 .badge-sale {
-  @apply bg-red-100 text-red-800;
+  background-color: #fee2e2;
+  color: #991b1b;
 }
 
 html.dark .badge-sale {
-  @apply bg-red-900 text-red-100;
+  background-color: #7f1d1d;
+  color: #fecaca;
 }
 
 .badge-new {
-  @apply bg-green-100 text-green-800;
+  background-color: #dcfce7;
+  color: #166534;
 }
 
 html.dark .badge-new {
-  @apply bg-green-900 text-green-100;
+  background-color: #14532d;
+  color: #bbf7d0;
 }
 
 /* Responsive adjustments */
@@ -272,9 +287,20 @@ html.dark .badge-new {
   }
   
   .navbar-mobile-menu {
-    @apply fixed inset-0 z-50 bg-white dark:bg-gray-900 pt-16;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    background-color: white;
+    padding-top: 4rem;
     transform: translateX(-100%);
     transition: transform var(--transition-normal) ease;
+  }
+
+  html.dark .navbar-mobile-menu {
+    background-color: #111827;
   }
   
   .navbar-mobile-menu.open {

@@ -1,7 +1,11 @@
+import { useContext } from 'react';
 import API from '../services/api';
 import toast from 'react-hot-toast';
+import { AuthContext } from "../context/authContext";
 
 const useProductActions = () => {
+    const { fetchCartItemsCount } = useContext(AuthContext);
+
   const addToCart = async (productId, quantity = 1) => {
     try {
       await API.post('/cart/add', { productId, quantity }, { withCredentials: true });
