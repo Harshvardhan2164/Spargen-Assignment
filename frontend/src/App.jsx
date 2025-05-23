@@ -28,7 +28,7 @@ function App() {
 
       <Route path="/wishlist" element={<Wishlist />} />
 
-      <Route path="/order-success/:id" element={<OrderSuccess />} />
+      <Route path="/order-success" element={<OrderSuccess />} />
 
       <Route path="/orders" element={<MyOrders />} />
 

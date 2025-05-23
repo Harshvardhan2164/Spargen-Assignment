@@ -74,7 +74,6 @@ const AuthProvider = ({ children }) => {
     const fetchCartItemsCount = async () => {
         try{
             const { data } = await API.get("/cart/", { withCredentials: true });
-            console.log(data.items);
             setCartItems(data.items);
             const total = data.items.reduce((sum, item) => sum + item.quantity, 0);
             setCartItemCount(total);

@@ -12,13 +12,12 @@ const ProductCard = ({ product }) => {
     const rating = product.rating || 4.2;
     const reviewCount = product.reviewCount || Math.floor(Math.random() * 50) + 10;
     
-    // Check if product is on sale (you can implement your own sale logic)
     const isOnSale = product.originalPrice && product.originalPrice > product.price;
     const discountPercentage = isOnSale ? 
         Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
 
     return (
-        <div className="group relative bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700">
+        <div className="group relative bg-white dark:bg-gray-900 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700">
             {/* Sale Badge */}
             {isOnSale && (
                 <div className="absolute top-3 left-3 z-10">
@@ -96,11 +95,11 @@ const ProductCard = ({ product }) => {
                 {/* Price Section */}
                 <div className="flex items-baseline gap-2 mb-4">
                     <span className="text-lg font-bold text-gray-900 dark:text-white">
-                        ${product.price}
+                        ₹{product.price}
                     </span>
                     {isOnSale && (
                         <span className="text-sm text-gray-500 dark:text-gray-400 line-through">
-                            ${product.originalPrice}
+                            ₹{product.originalPrice}
                         </span>
                     )}
                 </div>
@@ -113,7 +112,7 @@ const ProductCard = ({ product }) => {
                             addToCart(product._id);
                             () => fetchCartItemsCount();
                         }}
-                        className="flex-1 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-900 dark:bg-primary-dark hover:bg-gray-50 dark:hover:bg-primary-dark-hover rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-primary-dark"
+                        className="flex-1 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-900 bg-gray-50 dark:text-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary dark:focus:ring-primary-dark"
                     >
                         <ShoppingCart size={16} className="mr-2" />
                         Add to Cart

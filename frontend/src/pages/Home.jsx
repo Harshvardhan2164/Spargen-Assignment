@@ -1,5 +1,4 @@
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../context/authContext";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 import SkeletonCard from "../components/SkeletonCard";
@@ -159,7 +158,7 @@ const Home = () => {
                 </div>
 
             {/* Products Section */}
-            <div id="products-section" className="py-12 bg-white dark:bg-gray-900">
+            <div id="products-section" className="py-12 bg-gray-100 dark:bg-gray-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
@@ -174,7 +173,7 @@ const Home = () => {
                                 <input
                                     type="text"
                                     placeholder="Search products"
-                                    className="px-4 py-2 pr-10 w-full md:w-56 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+                                    className="px-4 py-2 pr-10 w-full md:w-56 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                                     value={filters.search}
                                     onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
                                 />
@@ -187,7 +186,7 @@ const Home = () => {
                             </form>
                             
                             <button
-                                className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                                className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-900"
                                 onClick={() => setShowFilters((prev) => !prev)}
                             >
                                 <Filter size={18} className="mr-2" />
@@ -199,7 +198,7 @@ const Home = () => {
 
                     {/* Expanded Filters Panel */}
                     {showFilters && (
-                        <div className="filters p-6 mb-8 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 animate-fade-in">
+                        <div className="filters p-6 mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 animate-fade-in">
                             <div className="flex justify-between items-center mb-4">
                                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Refine Results</h3>
                                 <button 
