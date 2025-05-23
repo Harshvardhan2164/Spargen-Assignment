@@ -20,7 +20,6 @@ const Login = () => {
             await login(email, password);
             setUsername(username);
             localStorage.setItem("username", username);
-            navigate("/");
         } catch (error) {
             console.error("Login failed:", error);
         } finally {

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import { useContext, useState } from "react";
-import { Moon, Sun, User, ShoppingCart, Heart, Package, ChevronDown } from "lucide-react";
+import { Moon, Sun, User, ShoppingCart, Heart, Package, ChevronDown, ShieldUser } from "lucide-react";
 import useDarkMode from "../utils/toggleMode";
 
 const Navbar = () => {
@@ -226,6 +226,16 @@ const Navbar = () => {
                                             <User size={16} className="mr-3 text-gray-500 dark:text-gray-400" />
                                             Profile
                                         </Link>
+                                        {user.isAdmin && (
+                                            <Link 
+                                            to="/admin" 
+                                            className="flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                                            style={{ transition: 'background-color var(--transition-normal) ease' }}
+                                            >
+                                            <ShieldUser size={16} className="mr-3 text-gray-500 dark:text-gray-400" />
+                                            Admin Panel
+                                        </Link>
+                                        )}
                                         <Link 
                                             to="/orders" 
                                             className="flex items-center px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
