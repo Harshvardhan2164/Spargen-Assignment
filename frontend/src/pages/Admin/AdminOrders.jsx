@@ -29,23 +29,22 @@ const AdminOrders = () => {
     }, []);
 
     return (
-        <div>
-            <h2 className="text-2xl font-semibold mb-4">Manage Orders</h2>
-            <table className="w-full table-auto text-left">
-                <thead>
+        <div className="overflow-x-auto rounded-lg shadow-sm">
+            <table className="w-full table-auto text-center divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gray-100 dark:bg-gray-700">
                 <tr>
-                    <th className="p-2 border-b">Order ID</th>
-                    <th className="p-2 border-b">User</th>
-                    <th className="p-2 border-b">Total</th>
-                    <th className="p-2 border-b">Status</th>
-                    <th className="p-2 border-b">Actions</th>
-                    <th className="p-2 border-b">Payment Status</th>
-                    <th className="p-2 border-b">Actions</th>
+                    <th className="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-300 uppercase tracking-wider">Order ID</th>
+                    <th className="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-300 uppercase tracking-wider">User</th>
+                    <th className="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-300 uppercase tracking-wider">Total</th>
+                    <th className="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                    <th className="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                    <th className="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-300 uppercase tracking-wider">Payment Status</th>
+                    <th className="px-4 py-3 text-center text-sm text-gray-600 dark:text-gray-300 uppercase tracking-wider">Actions</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody className="bg-white dark:bg-gray-900 text-center divide-y divide-gray-200 dark:divide-gray-700">
                 {orders.map((order) => (
-                    <tr key={order._id} className="hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <tr key={order._id} className="hover:bg-gray-200 dark:hover:bg-gray-950">
                     <td className="p-2">{order._id}</td>
                     <td className="p-2">{order.user?.name}</td>
                     <td className="p-2">₹{order.totalAmount}</td>

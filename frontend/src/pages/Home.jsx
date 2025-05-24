@@ -301,28 +301,13 @@ const Home = () => {
                                     <p className="text-gray-500 dark:text-gray-400">Try adjusting your search or filter to find what you're looking for.</p>
                                     <button
                                         onClick={clearFilters}
-                                        className="mt-6 px-4 py-2 bg-primary dark:bg-primary-dark text-white rounded-md hover:bg-primary-hover dark:hover:bg-primary-dark-hover transition"
+                                        className="mt-6 px-4 py-2 bg-gray-50 dark:text-white dark:bg-gray-700 text-gray-900 rounded-md hover:bg-gray-200 dark:hover:bg-gray-900 transition"
                                     >
                                         Clear Filters
                                     </button>
                                 </div>
                             )}
                         </>
-                    {/* ) : (
-                        <div className="py-16 text-center bg-gray-50 dark:bg-gray-800 rounded-lg">
-                            <img src="/api/placeholder/120/120" alt="Login required" className="mx-auto mb-4 rounded-full bg-gray-200 dark:bg-gray-700" />
-                            <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-2">Please log in to explore our products</h3>
-                            <p className="text-gray-600 dark:text-gray-300 mb-6">Sign in to view our collection and start shopping</p>
-                            <div className="flex justify-center gap-4">
-                                <a href="/login" className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 transition">
-                                    Log In
-                                </a>
-                                <a href="/register" className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 transition">
-                                    Register
-                                </a>
-                            </div>
-                        </div>
-                    )} */}
                 </div>
             </div>
         </div>
