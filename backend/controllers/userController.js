@@ -14,13 +14,14 @@ export const getAllUsers = async (req, res) => {
 export const updateRole = async (req, res) => {
     try{
         const { id } = req.params;
-        const { role } = req.body;
 
         const updated = await User.findById(id);
 
         if(!updated) return res.status(400).json({ message: "User not found" });
 
-        updated.isAdmin = !role === true;
+        updated.isAdmin = !updated.isAdmin;
+
+        updated.markModified("isAdmin");
 
         await updated.save();
 
@@ -35,7 +36,7 @@ export const deleteUser = async (req, res) => {
     try{
         const { id } = req.params;
 
-        const user = await User.findOneAndDelete(id);
+        const user = await User.findOneAndDelete({ _id: id });
 
         if(!user) return res.status(400).json({ message: "User not found" });
 
