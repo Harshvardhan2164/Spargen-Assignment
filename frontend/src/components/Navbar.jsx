@@ -12,7 +12,7 @@ const Navbar = () => {
     const isDark = theme === "dark";
 
     return (
-        <nav className="sticky top-0 z-50 w-full">
+        <nav className="sticky top-0 z-50 w-full shadow-2xl">
             <div className="w-full py-1 px-4 text-center" style={{ backgroundColor: 'var(--color-primary)' }}>
                 <p className="text-xs font-medium text-white">
                     Free shipping on orders over ₹2000 | Join our loyalty program for 10% off your first order
@@ -24,9 +24,9 @@ const Navbar = () => {
                 <Link to="/" className="flex items-center navbar-logo">
                     <span 
                         className="font-bold text-2xl tracking-tighter"
-                        style={{ color: 'var(--color-primary)' }}
+                        style={{ color: 'var(--color-primary-text)' }}
                     >
-                        SPARGEN
+                        HomeCraft
                     </span>
                 </Link>
                 
@@ -40,7 +40,7 @@ const Navbar = () => {
                             transition: 'color var(--transition-normal) ease'
                         }}
                         onMouseEnter={(e) => {
-                            e.target.style.color = 'var(--color-primary)';
+                            e.target.style.color = 'var(--color-primary-text)';
                         }}
                         onMouseLeave={(e) => {
                             e.target.style.color = '';
@@ -49,14 +49,14 @@ const Navbar = () => {
                         Home
                     </Link>
                     <Link 
-                        to="/products/living-room" 
+                        to="/category/living-room" 
                         className="navbar-category-link mx-3 text-sm uppercase font-medium text-gray-700 dark:text-gray-200"
                         style={{ 
                             '--hover-color': 'var(--color-primary)',
                             transition: 'color var(--transition-normal) ease'
                         }}
                         onMouseEnter={(e) => {
-                            e.target.style.color = 'var(--color-primary)';
+                            e.target.style.color = 'var(--color-primary-text)';
                         }}
                         onMouseLeave={(e) => {
                             e.target.style.color = '';
@@ -65,11 +65,11 @@ const Navbar = () => {
                         Living Room
                     </Link>
                     <Link 
-                        to="/products/bedroom" 
+                        to="/category/bedroom" 
                         className="navbar-category-link mx-3 text-sm uppercase font-medium text-gray-700 dark:text-gray-200"
                         style={{ transition: 'color var(--transition-normal) ease' }}
                         onMouseEnter={(e) => {
-                            e.target.style.color = 'var(--color-primary)';
+                            e.target.style.color = 'var(--color-primary-text)';
                         }}
                         onMouseLeave={(e) => {
                             e.target.style.color = '';
@@ -78,11 +78,11 @@ const Navbar = () => {
                         Bedroom
                     </Link>
                     <Link 
-                        to="/products/kitchen" 
+                        to="/category/kitchen" 
                         className="navbar-category-link mx-3 text-sm uppercase font-medium text-gray-700 dark:text-gray-200"
                         style={{ transition: 'color var(--transition-normal) ease' }}
                         onMouseEnter={(e) => {
-                            e.target.style.color = 'var(--color-primary)';
+                            e.target.style.color = 'var(--color-primary-text)';
                         }}
                         onMouseLeave={(e) => {
                             e.target.style.color = '';
@@ -91,11 +91,11 @@ const Navbar = () => {
                         Kitchen
                     </Link>
                     <Link 
-                        to="/products/office" 
+                        to="/category/office" 
                         className="navbar-category-link mx-3 text-sm uppercase font-medium text-gray-700 dark:text-gray-200"
                         style={{ transition: 'color var(--transition-normal) ease' }}
                         onMouseEnter={(e) => {
-                            e.target.style.color = 'var(--color-primary)';
+                            e.target.style.color = 'var(--color-primary-text)';
                         }}
                         onMouseLeave={(e) => {
                             e.target.style.color = '';
@@ -104,7 +104,7 @@ const Navbar = () => {
                         Office
                     </Link>
                     <Link 
-                        to="/products/deals" 
+                        to="/deals" 
                         className="navbar-category-link mx-3 text-sm uppercase font-medium text-red-600 dark:text-red-400"
                         style={{ transition: 'color var(--transition-normal) ease' }}
                         onMouseEnter={(e) => {

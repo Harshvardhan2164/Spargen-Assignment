@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import API from "../services/api";
+import Footer from "../components/Footer";
 import { 
     Package, 
     Calendar, 
@@ -307,6 +308,8 @@ const MyOrders = () => {
                     </button>
                 </div>
             </div>
+
+            <Footer />
         </div>
     );
 };

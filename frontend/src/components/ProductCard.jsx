@@ -9,12 +9,11 @@ const ProductCard = ({ product }) => {
     const { fetchCartItemsCount } = useContext(AuthContext);
 
     
-    const rating = product.rating || 4.2;
-    const reviewCount = product.reviewCount || Math.floor(Math.random() * 50) + 10;
+    const rating = product.rating || 4;
+    const reviewCount = product.numReviews || Math.floor(Math.random() * 50) + 10;
     
-    const isOnSale = product.originalPrice && product.originalPrice > product.price;
-    const discountPercentage = isOnSale ? 
-        Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
+    const isOnSale = true;
+    let originalprice = 0;
 
     return (
         <div className="group relative bg-white dark:bg-gray-900 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700">
@@ -22,7 +21,7 @@ const ProductCard = ({ product }) => {
             {isOnSale && (
                 <div className="absolute top-3 left-3 z-10">
                     <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200">
-                        -{discountPercentage}%
+                        15% OFF
                     </span>
                 </div>
             )}
@@ -99,7 +98,7 @@ const ProductCard = ({ product }) => {
                     </span>
                     {isOnSale && (
                         <span className="text-sm text-gray-500 dark:text-gray-400 line-through">
-                            ₹{product.originalPrice}
+                            ₹{Math.floor(product.price + product.price * 0.15)}
                         </span>
                     )}
                 </div>

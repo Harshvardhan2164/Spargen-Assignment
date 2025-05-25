@@ -14,6 +14,7 @@ import AdminPanel from './pages/Admin/AdminPanel';
 import AdminUsers from './pages/Admin/AdminUsers';
 import AdminProducts from './pages/Admin/AdminProducts';
 import AdminOrders from './pages/Admin/AdminOrders';
+import CategoryPage from './pages/CategoryPage';
 import { AuthContext } from './context/authContext';
 import "./App.css";
 
@@ -28,6 +29,11 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPass />} />
 
       <Route path="/" element={<Home />} />
+
+      <Route path="/category/:category" element={<CategoryPage />} />
+      {/* <Route path="/category/bedroom" element={<CategoryPage />} />
+      <Route path="/category/kitchen" element={<CategoryPage />} />
+      <Route path="/category/office" element={<CategoryPage />} /> */}
 
       <Route path="/product/:slug" element={<ProductDetails />} />
 

@@ -1,37 +1,70 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 import SkeletonCard from "../components/SkeletonCard";
+import Footer from "../components/Footer";
 import API from "../services/api";
 import useVoiceSearch from "../utils/VoiceSearch";
-import { Filter, X, ChevronDown, ChevronUp, ArrowRight, Mic, MicOff } from "lucide-react";
-import living_room from "../assets/modern-living-room.jpg";
-import living_room_2 from "../assets/living-room.jpeg";
+import { Filter, X, ChevronDown, ChevronUp, ArrowLeft, Mic, MicOff, Home } from "lucide-react";
+import living_room from "../assets/living-room.jpeg";
+import bedroom from "../assets/bedroom.jpg";
 import kitchen from "../assets/kitchen.jpg";
 import office from "../assets/office.jpg";
-import bedroom from "../assets/bedroom.jpg";
-import Footer from "../components/Footer";
 
-const Home = () => {
+const categoryData = {
+    'living room': {
+        name: 'Living Room',
+        title: 'Transform Your Living Space',
+        description: 'Discover comfortable sofas, stylish coffee tables, and elegant decor to create the perfect gathering space for family and friends.',
+        heroImage: living_room,
+    },
+    'bedroom': {
+        name: 'Bedroom',
+        title: 'Create Your Dream Bedroom',
+        description: 'Find peaceful retreat furniture including beds, dressers, nightstands, and cozy accessories for the perfect night\'s rest.',
+        heroImage: bedroom,
+    },
+    'kitchen': {
+        name: 'Kitchen',
+        title: 'Design Your Culinary Haven',
+        description: 'Explore functional and beautiful kitchen furniture, dining sets, and storage solutions to make your kitchen the heart of your home.',
+        heroImage: kitchen,
+    },
+    'office': {
+        name: 'Office',
+        title: 'Build Your Productive Workspace',
+        description: 'Create an inspiring work environment with ergonomic chairs, functional desks, and smart storage solutions.',
+        heroImage: office,
+    }
+};
+
+const CategoryPage = () => {
+    let { category } = useParams();
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showFilters, setShowFilters] = useState(false);
     const [filters, setFilters] = useState({
-        category: '',
+        category: category || '',
         minPrice: '',
         maxPrice: '',
         search: ''
     });
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
-    const [featuredCategories] = useState([
-        { id: 'living-room', name: 'Living Room', image: living_room_2 },
-        { id: 'bedroom', name: 'Bedroom', image: bedroom },
-        { id: 'kitchen', name: 'Kitchen', image: kitchen },
-        { id: 'office', name: 'Office', image: office }
-    ]);
+
+    if(category === 'living-room'){
+        category = 'living room';
+    }
+
+    // Get category info
+    const categoryInfo = categoryData[category] || {
+        name: 'Products',
+        title: 'Browse Products',
+        description: 'Discover our collection of quality furniture and home decor.',
+        heroImage: '/api/placeholder/800/400'
+    };
 
     // Voice search callback function
     const handleVoiceTranscript = (transcript) => {
@@ -44,26 +77,42 @@ const Home = () => {
         try {
             setLoading(true);
 
-            const queryParams = new URLSearchParams({ ...filters, page, limit: 8 }).toString();
-            const { data } = await API.get(`/product?${queryParams}`, filters);
+            const queryParams = new URLSearchParams({ 
+                ...filters, 
+                category: category,
+                page: reset ? 1 : page, 
+                limit: 8
+            }).toString();
+            
+            const { data } = await API.get(`/product?${queryParams}`);
 
             if (reset) {
                 setProducts(data.products);
+                setPage(1);
             } else {
                 setProducts(prev => [...prev, ...data.products]);
             }
 
-            setHasMore(page < data.pages);
+            setHasMore((reset ? 1 : page) < data.pages);
         } catch (error) {
-            console.error("Error fetching products. ", error);
+            console.error("Error fetching products: ", error);
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        fetchProducts(page === 1);
-    }, [page, filters]);
+        setFilters(prev => ({ ...prev, category: category || '' }));
+        setPage(1);
+        setHasMore(true);
+        setProducts([]);
+    }, [category]);
+
+    useEffect(() => {
+        if (category) {
+            fetchProducts(page === 1);
+        }
+    }, [page, filters, category]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -80,23 +129,14 @@ const Home = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [loading, hasMore]);
 
-    useEffect(() => {
-        setPage(1);
-        setHasMore(true);
-    }, [filters]);
-
     const clearFilters = () => {
-        setFilters({ category: '', minPrice: '', maxPrice: '', search: '' });
+        setFilters({ category: category, minPrice: '', maxPrice: '', search: '' });
         clearTranscript();
     };
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         fetchProducts(true);
-    };
-
-    const selectCategory = (categoryId) => {
-        navigate(`/category/${categoryId}`);
     };
 
     const handleVoiceSearch = () => {
@@ -107,80 +147,78 @@ const Home = () => {
         }
     };
 
+    const goHome = () => {
+        navigate('/');
+    };
+
+    // Handle invalid category
+    if (category && !categoryData[category]) {
+        return (
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+                <Navbar />
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                    <div className="text-center">
+                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Category Not Found</h1>
+                        <p className="text-gray-600 dark:text-gray-300 mb-8">The category you're looking for doesn't exist.</p>
+                        <button
+                            onClick={goHome}
+                            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-gray-900 hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-all"
+                        >
+                            <Home size={18} className="mr-2" />
+                            Go Home
+                        </button>
+                    </div>
+                </div>
+                <Footer />
+            </div>
+        );
+    }
+
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
             <Navbar />
 
             {/* Hero Section */}
-            <div className="relative py-16 md:py-24 bg-gray-100 dark:bg-gray-800 overflow-hidden">
+            <div className="relative py-12 md:py-16 bg-white dark:bg-gray-900 overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* Breadcrumb */}
+                    <div className="mb-8 text-sm">
+                        <button
+                            onClick={goHome}
+                            className="icon-btn text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                        >
+                            ← Go Back Home
+                        </button>
+                    </div>
+
                     <div className="md:flex md:items-center md:justify-between">
                         <div className="md:w-1/2 mb-8 md:mb-0 md:pr-8">
-                            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
-                                Creating Home <br></br> Creating Memories
-                            </h1>
-                            <p className="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-300">
-                                Discover affordable furniture and home decoration that suit your style
-                            </p>
-                            <div className="mt-8">
-                                <a 
-                                    href="#products-section"
-                                    className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-black bg-gray-300 hover:bg-gray-400 dark:text-white dark:bg-gray-900 dark:hover:bg-gray-950 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all"
-                                >
-                                    Shop Now
-                                    <ArrowRight size={18} className="ml-2" />
-                                </a>
+                            <div className="flex items-center mb-4">
+                                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
+                                    {categoryInfo.title}
+                                </h1>
                             </div>
+                            <p className="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-300">
+                                {categoryInfo.description}
+                            </p>
                         </div>
                         <div className="md:w-1/2">
                             <img 
-                                src={living_room} 
-                                alt="Modern living room" 
-                                className="rounded-lg shadow-md w-full object-cover h-64 md:h-auto"
+                                src={categoryInfo.heroImage}
+                                alt={categoryInfo.name}
+                                className="rounded-lg shadow-md w-full object-cover h-64 md:h-80"
                             />
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Category Browse Section */}
-            <div className="py-12 bg-white dark:bg-gray-900">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <h2 className="text-2xl font-bold mb-8 text-gray-900 dark:text-white text-center md:text-left">
-                        Browse by Room
-                    </h2>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                        {featuredCategories.map((category) => (
-                            <div 
-                                key={category.id}
-                                className="group cursor-pointer"
-                                onClick={() => selectCategory(category.id)}
-                            >
-                                <div className="relative rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-800 aspect-w-1 aspect-h-1 h-40 md:h-56">
-                                    <img 
-                                        src={category.image} 
-                                        alt={category.name} 
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                                        <h3 className="category text-lg font-medium text-gray-50">{category.name}</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
             {/* Products Section */}
-            <div id="products-section" className="py-12 bg-gray-100 dark:bg-gray-800">
+            <div className="py-12 bg-gray-100 dark:bg-gray-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-                            {filters.category ? 
-                                filters.category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 
-                                'All Products'}
+                            {categoryInfo.name} Collection
                         </h2>
                         
                         {/* Search & Filter Controls */}
@@ -253,7 +291,7 @@ const Home = () => {
 
                     {/* Expanded Filters Panel */}
                     {showFilters && (
-                        <div className="filters p-6 mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 animate-fade-in">
+                        <div className="p-6 mb-8 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
                             <div className="flex justify-between items-center mb-4">
                                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Refine Results</h3>
                                 <button 
@@ -264,25 +302,10 @@ const Home = () => {
                                 </button>
                             </div>
                             
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
                                 <div>
-                                    <label className="block mb-3.5 text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
-                                    <select
-                                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                                        value={filters.category}
-                                        onChange={(e) => setFilters(prev => ({ ...prev, category: e.target.value }))}
-                                    >
-                                        <option value="">All Categories</option>
-                                        <option value="living room">Living Room</option>
-                                        <option value="bedroom">Bedroom</option>
-                                        <option value="kitchen">Kitchen</option>
-                                        <option value="office">Office</option>
-                                    </select>
-                                </div>
-                                
-                                <div>
-                                    <label className="block mb-2.5 text-sm font-medium text-gray-700 dark:text-gray-300">Price Range</label>
-                                    <div className="flex items-center gap-8">
+                                    <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Price Range</label>
+                                    <div className="flex items-center gap-4">
                                         <input
                                             type="number"
                                             placeholder="Min"
@@ -305,16 +328,16 @@ const Home = () => {
                             <div className="grid grid-cols-1 md:grid-cols-6 gap-6 mt-6">
                                 <button
                                     onClick={() => fetchProducts(true)}
-                                    className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition"
+                                    className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
                                 >
-                                    Apply
+                                    Apply Filters
                                 </button>
                                 
                                 <button
                                     onClick={clearFilters}
-                                    className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition"
+                                    className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
                                 >
-                                    Clear
+                                    Clear Filters
                                 </button>
                             </div>
                         </div>
@@ -323,7 +346,7 @@ const Home = () => {
                     {/* Product Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         {loading && page === 1
-                            ? Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)
+                            ? Array.from({ length: 12 }).map((_, i) => <SkeletonCard key={i} />)
                             : products.map((product) => <ProductCard key={product.slug} product={product} />)
                         }
                     </div>
@@ -344,7 +367,7 @@ const Home = () => {
                     {/* End Message */}
                     {!hasMore && !loading && products.length > 0 && (
                         <div className="text-center text-gray-500 dark:text-gray-400 mt-10 pb-8">
-                            You've reached the end of our collection.
+                            You've reached the end of our {categoryInfo.name.toLowerCase()} collection.
                         </div>
                     )}
 
@@ -372,4 +395,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default CategoryPage;

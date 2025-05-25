@@ -13,6 +13,7 @@
   
   /* Primary brand colors */
   --color-primary: #0058a3;          /* IKEA-inspired blue */
+  --color-primary-text: #5789da;          /* IKEA-inspired blue */
   --color-primary-hover: #004f93;    /* Slightly darker on hover */
   --color-primary-dark: #3182ce;     /* Brighter blue for dark mode */
   --color-primary-dark-hover: #4299e1; /* Lighter blue for dark mode hover */
