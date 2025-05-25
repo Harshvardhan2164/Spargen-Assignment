@@ -282,7 +282,7 @@ const Home = () => {
                                 
                                 <div>
                                     <label className="block mb-2.5 text-sm font-medium text-gray-700 dark:text-gray-300">Price Range</label>
-                                    <div className="flex items-center gap-8">
+                                    <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-8">
                                         <input
                                             type="number"
                                             placeholder="Min"
@@ -290,7 +290,7 @@ const Home = () => {
                                             value={filters.minPrice}
                                             onChange={(e) => setFilters(prev => ({ ...prev, minPrice: e.target.value }))}
                                         />
-                                        <span className="text-gray-500 dark:text-gray-400">to</span>
+                                        <div className="text-center text-gray-500 dark:text-gray-400">to</div>
                                         <input
                                             type="number"
                                             placeholder="Max"

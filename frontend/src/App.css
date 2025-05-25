@@ -69,10 +69,10 @@ button {
   transition: all var(--transition-normal) ease-in-out;
 }
 
-button:focus,
+/* button:focus,
 button:focus-visible {
   outline: 3px solid var(--color-primary);
-}
+} */
 
 /* Form styles */
 input, textarea, select {

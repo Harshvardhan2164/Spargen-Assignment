@@ -15,6 +15,7 @@ import AdminUsers from './pages/Admin/AdminUsers';
 import AdminProducts from './pages/Admin/AdminProducts';
 import AdminOrders from './pages/Admin/AdminOrders';
 import CategoryPage from './pages/CategoryPage';
+import DealsPage from './pages/Deals';
 import { AuthContext } from './context/authContext';
 import "./App.css";
 
@@ -31,9 +32,8 @@ function App() {
       <Route path="/" element={<Home />} />
 
       <Route path="/category/:category" element={<CategoryPage />} />
-      {/* <Route path="/category/bedroom" element={<CategoryPage />} />
-      <Route path="/category/kitchen" element={<CategoryPage />} />
-      <Route path="/category/office" element={<CategoryPage />} /> */}
+
+      <Route path="/deals" element={<DealsPage />} />
 
       <Route path="/product/:slug" element={<ProductDetails />} />
 

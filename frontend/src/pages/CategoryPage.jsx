@@ -187,7 +187,7 @@ const CategoryPage = () => {
                             onClick={goHome}
                             className="icon-btn text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                         >
-                            ← Go Back Home
+                            ← Back to Home
                         </button>
                     </div>
 
@@ -305,7 +305,7 @@ const CategoryPage = () => {
                             <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Price Range</label>
-                                    <div className="flex items-center gap-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         <input
                                             type="number"
                                             placeholder="Min"
@@ -313,7 +313,7 @@ const CategoryPage = () => {
                                             value={filters.minPrice}
                                             onChange={(e) => setFilters(prev => ({ ...prev, minPrice: e.target.value }))}
                                         />
-                                        <span className="text-gray-500 dark:text-gray-400">to</span>
+                                        <div className="text-center text-gray-500 dark:text-gray-400">to</div>
                                         <input
                                             type="number"
                                             placeholder="Max"
