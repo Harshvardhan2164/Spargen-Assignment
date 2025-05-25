@@ -4,14 +4,14 @@ import slugify from 'slugify';
 // Admin Only
 export const addProduct = async (req, res) => {
     try{
-        const { name, description, price, category, brand, stock, tags, images } = req.body;
+        const { name, description, price, category, brand, stock, tags, images, rating } = req.body;
 
         const slug = slugify(name, { lower: true });
         const existing = await Product.findOne({ slug });
 
         if(existing) return res.status(400).json({ message: 'Product already exists' });
 
-        const product = await Product.create({ name, slug, description, price, brand, stock, tags, images, category });
+        const product = await Product.create({ name, slug, description, price, brand, stock, tags, images, category, rating });
         res.status(201).json({ message: 'Product added successfully' });
     } catch(error){
         console.log(error);
