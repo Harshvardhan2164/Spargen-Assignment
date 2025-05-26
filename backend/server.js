@@ -16,7 +16,7 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors({credentials: true, origin: ['http://localhost:5173', 'https://homecraft.onrender.com/']}));
+app.use(cors({credentials: true, origin: ['http://localhost:5173', 'https://homecraft.onrender.com']}));
 app.use(helmet());
 app.use(morgan("dev"));
 app.use(express.json());
