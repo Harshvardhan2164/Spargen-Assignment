@@ -2,8 +2,6 @@
 
 **HomeCraft** is a full-featured eCommerce web application inspired by IKEA, built with the **MERN stack (MongoDB, Express.js, React, Node.js)**. It offers seamless browsing, wishlist management, cart operations, order checkout, and an admin dashboard.
 
----
-
 ## Features
 
 ### 1. User Functionality

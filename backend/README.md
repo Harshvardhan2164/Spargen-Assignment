@@ -2,8 +2,6 @@
 
 This is the backend API built with **Node.js + Express + MongoDB** for the HomeCraft.
 
----
-
 ## Features
 
 - JWT-based authentication (login, register)

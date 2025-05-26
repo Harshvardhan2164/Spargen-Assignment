@@ -2,8 +2,6 @@
 
 This is the frontend React application for the HomeCraft using **Vite** and **TailwindCSS**.
 
----
-
 ## Features
 
 ### 1. Product Pages
