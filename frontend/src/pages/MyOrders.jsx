@@ -9,6 +9,7 @@ import {
     CreditCard, 
     Truck, 
     CheckCircle, 
+    X,
     Clock, 
     MapPin, 
     ShoppingBag,
@@ -38,22 +39,36 @@ const MyOrders = () => {
         fetchOrders();
     }, []);
 
-    const getStatusColor = (status, isDelivered) => {
-        if (isDelivered) return "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20";
+    const getStatusColor = (status) => {
         switch (status) {
-            case "processing": return "text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20";
-            case "shipped": return "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20";
-            case "delivered": return "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20";
+            case "In-Transit": return "text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20";
+            case "Processing": return "text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20";
+            case "Shipped": return "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20";
+            case "Delivered": return "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20";
+            case "Cancelled": return "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20";
             default: return "text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/20";
         }
     };
 
-    const getStatusIcon = (status, isDelivered) => {
-        if (isDelivered) return <CheckCircle size={16} />;
+    const getStatusColorText = (status) => {
         switch (status) {
-            case "processing": return <Clock size={16} />;
-            case "shipped": return <Truck size={16} />;
-            case "delivered": return <CheckCircle size={16} />;
+            case "In-Transit": return "text-yellow-600 dark:text-yellow-400";
+            case "Processing": return "text-yellow-600 dark:text-yellow-400";
+            case "Shipped": return "text-blue-600 dark:text-blue-400";
+            case "Delivered": return "text-green-600 dark:text-green-400";
+            case "Cancelled": return "text-red-600 dark:text-red-400";
+            default: return "text-gray-600 dark:text-gray-400 bg-gray-50";
+        }
+    };
+
+    const getStatusIcon = (status) => {
+        if (status === "Delivered") return <CheckCircle size={16} />;
+        switch (status) {
+            case "Processing": return <Clock size={16} />;
+            case "In-Transit": return <Clock size={16} />;
+            case "Shipped": return <Truck size={16} />;
+            case "Delivered": return <CheckCircle size={16} />;
+            case "Cancelled": return <X size={16} />;
             default: return <Package size={16} />;
         }
     };
@@ -69,8 +84,8 @@ const MyOrders = () => {
 
     const filteredOrders = orders.filter(order => {
         if (filter === "all") return true;
-        if (filter === "delivered") return order.isDelivered;
-        if (filter === "pending") return !order.isDelivered;
+        if (filter === "delivered") return order.status === "Delivered";
+        if (filter === "pending") return !order.status === "Delivered";
         return order.status === filter;
     });
 
@@ -110,9 +125,9 @@ const MyOrders = () => {
                     <div className="card-container rounded-2xl p-2 backdrop-blur-sm border border-gray-200 dark:border-gray-700 inline-flex gap-1">
                         {[
                             { key: "all", label: "All Orders", count: orders.length },
-                            { key: "delivered", label: "Delivered", count: orders.filter(o => o.isDelivered).length },
-                            { key: "shipped", label: "Shipped", count: orders.filter(o => o.status === "shipped").length },
-                            { key: "processing", label: "Processing", count: orders.filter(o => o.status === "processing").length }
+                            { key: "delivered", label: "Delivered", count: orders.filter(o => o.status === "Delivered").length },
+                            { key: "shipped", label: "Shipped", count: orders.filter(o => o.status === "Shipped").length },
+                            { key: "processing", label: "Processing", count: orders.filter(o => o.status === "Processing").length }
                         ].map(tab => (
                             <button
                             key={tab.key}
@@ -178,11 +193,10 @@ const MyOrders = () => {
                                     </div>
                                     
                                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                                        <div className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg font-semibold text-sm ${getStatusColor(order.status, order.isDelivered)}`}>
-                                            {getStatusIcon(order.status, order.isDelivered)}
-                                            {/* {order.isDelivered ? "Delivered" : order.status.charAt(0).toUpperCase() + order.status.slice(1)} */}
-                                            <span className={order.isDelivered ? "text-green-600 dark:text-green-400" : "text-yellow-600 dark:text-yellow-400"}>
-                                                {order.isDelivered ? "Delivered" : "Pending"}
+                                        <div className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg font-semibold text-sm ${getStatusColor(order.status)}`}>
+                                            {getStatusIcon(order.status)}
+                                            <span className={getStatusColorText(order.status)}>
+                                                {order.status}
                                             </span>
                                         </div>
                                         
@@ -239,11 +253,11 @@ const MyOrders = () => {
                                                 </div>
                                                 <div className="flex justify-between items-center">
                                                     <span className="text-gray-600 dark:text-gray-400">Delivery:</span>
-                                                    <span className={`font-semibold ${order.isDelivered ? "text-green-600 dark:text-green-400" : "text-yellow-600 dark:text-yellow-400"}`}>
-                                                        {order.isDelivered ? "Delivered" : "In Transit"}
+                                                    <span className={getStatusColorText(order.status)}>
+                                                        {order.status}
                                                     </span>
                                                 </div>
-                                                {order.isDelivered && (
+                                                {order.status === "Delivered" && (
                                                     <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
                                                         <p className="text-sm text-gray-600 dark:text-gray-400">
                                                             <strong>Delivered on:</strong><br />

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import ProductCard from "../components/ProductCard";
 import SkeletonCard from "../components/SkeletonCard";
 import Footer from "../components/Footer";
 import useVoiceSearch from "../utils/VoiceSearch";
@@ -9,6 +8,12 @@ import {
     Filter, X, ChevronDown, ChevronUp, ArrowLeft, Mic, MicOff, 
     Clock, Percent, Tag, Star, Zap, ArrowRight, Home 
 } from "lucide-react";
+import sofa from "../assets/sofa.jpg";
+import dining from "../assets/dining.jpg"
+import chair from "../assets/chair.jpg";
+import coffee from "../assets/coffee.jpg";
+import bookshelf from "../assets/bookshelf.jpg";
+import queen from "../assets/queen.jpg";
 
 const DealsPage = () => {
     const navigate = useNavigate();
@@ -29,11 +34,11 @@ const DealsPage = () => {
             id: 1,
             slug: 'modern-sofa-deal',
             name: 'Modern 3-Seat Sofa',
-            price: 599,
-            originalPrice: 899,
+            price: 12729,
+            originalPrice: 18999,
             discount: 33,
             category: 'living-room',
-            image: '/api/placeholder/300/300',
+            image: sofa,
             rating: 4.8,
             reviews: 124,
             dealType: 'flash',
@@ -44,11 +49,11 @@ const DealsPage = () => {
             id: 2,
             slug: 'dining-table-deal',
             name: 'Oak Dining Table Set',
-            price: 399,
-            originalPrice: 649,
+            price: 10219,
+            originalPrice: 16490,
             discount: 38,
             category: 'kitchen',
-            image: '/api/placeholder/300/300',
+            image: dining,
             rating: 4.6,
             reviews: 89,
             dealType: 'weekly',
@@ -59,11 +64,11 @@ const DealsPage = () => {
             id: 3,
             slug: 'office-chair-deal',
             name: 'Ergonomic Office Chair',
-            price: 199,
-            originalPrice: 299,
+            price: 5359,
+            originalPrice: 7999,
             discount: 33,
             category: 'office',
-            image: '/api/placeholder/300/300',
+            image: chair,
             rating: 4.7,
             reviews: 203,
             dealType: 'clearance',
@@ -74,11 +79,11 @@ const DealsPage = () => {
             id: 4,
             slug: 'bedroom-set-deal',
             name: 'Queen Bedroom Set',
-            price: 799,
-            originalPrice: 1299,
+            price: 14259,
+            originalPrice: 22999,
             discount: 38,
             category: 'bedroom',
-            image: '/api/placeholder/300/300',
+            image: queen,
             rating: 4.9,
             reviews: 156,
             dealType: 'flash',
@@ -89,11 +94,11 @@ const DealsPage = () => {
             id: 5,
             slug: 'coffee-table-deal',
             name: 'Glass Coffee Table',
-            price: 149,
-            originalPrice: 249,
+            price: 2999,
+            originalPrice: 4999,
             discount: 40,
             category: 'living-room',
-            image: '/api/placeholder/300/300',
+            image: coffee,
             rating: 4.5,
             reviews: 78,
             dealType: 'weekly',
@@ -104,11 +109,11 @@ const DealsPage = () => {
             id: 6,
             slug: 'bookshelf-deal',
             name: '5-Tier Bookshelf',
-            price: 89,
-            originalPrice: 159,
+            price: 7279,
+            originalPrice: 12999,
             discount: 44,
             category: 'office',
-            image: '/api/placeholder/300/300',
+            image: bookshelf,
             rating: 4.4,
             reviews: 92,
             dealType: 'clearance',
@@ -257,7 +262,7 @@ const DealsPage = () => {
                         <span className="ml-1 text-sm text-gray-600 dark:text-gray-300">{product.rating}</span>
                     </div>
                     <span className="mx-2 text-gray-300 dark:text-gray-600">•</span>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">{product.reviews} reviews</span>
+                    <span className="text-sm text-gray-500 dark:text-gray-400">({product.reviews})</span>
                 </div>
 
                 {/* Price */}

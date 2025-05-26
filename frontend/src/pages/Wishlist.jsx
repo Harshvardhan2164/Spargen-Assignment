@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Heart, ShoppingCart, Trash2, Star, ArrowRight } from "lucide-react";
 import API from "../services/api";
 import Navbar from "../components/Navbar";
 import toast from "react-hot-toast";
 
 const Wishlist = () => {
+    const navigate = useNavigate();
     const [wishlist, setWishlist] = useState([]);
     const [loading] = useState(false);
 
@@ -104,7 +106,7 @@ const Wishlist = () => {
                                 Save your favorite items to keep track of what you love and buy them later.
                             </p>
                             <button 
-                                onClick={() => console.log("Navigate to shop")}
+                                onClick={() => navigate("/")}
                                 className="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold"
                                 >
                                 Discover Products
@@ -156,9 +158,6 @@ const Wishlist = () => {
                                             <div className="flex items-center gap-1">
                                                 {renderStars(item.product.rating)}
                                             </div>
-                                            {/* <span className="text-sm text-gray-600 dark:text-gray-400">
-                                                ({item.product.reviews})
-                                                </span> */}
                                         </div>
                                         
                                         {/* Price */}
@@ -218,18 +217,13 @@ const Wishlist = () => {
                                 <div className="flex gap-3">
                                     <button 
                                         onClick={() => {
-                                            wishlist.forEach(item => moveToCart(item.product._id));
+                                            const wishlistCopy = [...wishlist];
+                                            wishlistCopy.forEach(item => moveToCart(item.product._id));
                                         }}
                                         className="btn-secondary px-6 py-3 rounded-xl font-semibold inline-flex items-center gap-2"
                                         >
                                         <ShoppingCart size={18} />
                                         Add All to Cart
-                                    </button>
-                                    <button 
-                                        onClick={() => setWishlist([])}
-                                        className="px-6 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium transition-all duration-300"
-                                        >
-                                        Clear All
                                     </button>
                                 </div>
                             </div>

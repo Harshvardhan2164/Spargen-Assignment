@@ -12,7 +12,7 @@ const Navbar = () => {
     const isDark = theme === "dark";
 
     return (
-        <nav className="sticky top-0 z-50 w-full shadow-2xl">
+        <nav className="sticky top-0 z-50 w-full shadow-xl">
             <div className="w-full py-1 px-4 text-center" style={{ backgroundColor: 'var(--color-primary)' }}>
                 <p className="text-xs font-medium text-white">
                     Free shipping on orders over ₹2000 | Join our loyalty program for 10% off your first order
