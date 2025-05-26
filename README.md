@@ -20,8 +20,6 @@
 - View & manage Orders
 - View registered Users
 
----
-
 ## Tech Stack
 
 - **Frontend**: React + Vite, Tailwind CSS
@@ -30,8 +28,6 @@
 - **Authentication**: JWT
 - **State Management**: Redux Toolkit, React Hook
 - **Icons**: Lucide-react
-
----
 
 ## Setup Instructions
 
