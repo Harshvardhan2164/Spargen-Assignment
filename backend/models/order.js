@@ -35,9 +35,10 @@ const orderSchema = new mongoose.Schema({
         default: 'Pending'
     },
     totalAmount: Number,
-    isDelivered: {
-        type: Boolean,
-        default: false
+    status: {
+        type: String,
+        enum: ['Processing', 'In-Transit', 'Shipped', 'Delivered', 'Cancelled'],
+        default: 'Processing'
     },
     deliveredAt: Date
 }, { timestamps: true });

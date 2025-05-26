@@ -207,7 +207,7 @@ const ProductDetails = () => {
                     <div className="card-container rounded-2xl p-6 backdrop-blur-sm border border-gray-200 dark:border-gray-700">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-bold text-gray-900 dark:text-white">Customer Reviews</h3>
-                            <button className="text-blue-600 dark:text-blue-400 text-sm font-semibold hover:underline">
+                            <button className="text-blue-600 dark:text-blue-400 text-sm font-semibold hover:text-blue-500">
                                 Write a Review
                             </button>
                         </div>
@@ -229,7 +229,7 @@ const ProductDetails = () => {
                             <div className="flex-1">
                                 {/* Rating Breakdown */}
                                 {[5, 4, 3, 2, 1].map((star) => {
-                                    const percentage = Math.random() * 80 + 10; // Mock data
+                                    const percentage = Math.random() * 80 + 10;
                                     const count = Math.floor(Math.random() * 50 + 5);
                                     return (
                                         <div key={star} className="flex items-center gap-2 mb-2">

@@ -1,27 +1,3 @@
-// import { useEffect} from "react";
-// import { useNavigate } from "react-router-dom";
-
-// const OrderSuccess = () => {
-//     const navigate = useNavigate();
-
-//     useEffect(() => {
-//         const timer = setTimeout(() => {
-//             navigate("/orders");
-//         }, 5000);
-
-//         return () => clearTimeout(timer);
-//     }, [navigate]);
-
-//     return (
-//         <div className="min-h-screen flex flex-col items-center justify-center text-white bg-gray-900">
-//             <h1 className="text-3xl font-bold mb-4">Thank you for your order!</h1>
-//             <p className="mb-4">You’ll be redirected to your order history shortly.</p>
-//         </div>
-//     );
-// };
-
-// export default OrderSuccess;
-
 import { useEffect, useState } from "react";
 import { useNavigate} from "react-router-dom";
 import { 

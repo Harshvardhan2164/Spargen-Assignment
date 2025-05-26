@@ -25,13 +25,22 @@ export const getAllOrders = async (req, res) => {
 
 export const updateStatusOrder = async (req, res) => {
     try{
-        const user = req.user.id;
+        const { value, key } = req.body;
         const order = await Order.findById(req.params.id);
 
         if(!order) return res.status(400).json({ message: 'Order not found' });
 
-        order.isDelivered = true;
-        order.deliveredAt = new Date();
+        if(key === "status"){
+            order.status = value;
+
+            if(value === "Delivered"){
+                order.deliveredAt = new Date();
+            }
+        }
+
+        else{
+            order.paymentStatus = value;
+        }
 
         await order.save();
 

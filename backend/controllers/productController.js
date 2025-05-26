@@ -4,14 +4,14 @@ import slugify from 'slugify';
 // Admin Only
 export const addProduct = async (req, res) => {
     try{
-        const { name, description, price, category, brand, stock, tags, images } = req.body;
+        const { name, description, price, category, brand, stock, tags, images, rating } = req.body;
 
         const slug = slugify(name, { lower: true });
         const existing = await Product.findOne({ slug });
 
         if(existing) return res.status(400).json({ message: 'Product already exists' });
 
-        const product = await Product.create({ name, slug, description, price, brand, stock, tags, images, category });
+        const product = await Product.create({ name, slug, description, price, brand, stock, tags, images, category, rating });
         res.status(201).json({ message: 'Product added successfully' });
     } catch(error){
         console.log(error);
@@ -21,11 +21,33 @@ export const addProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
     try{
-        const { category, minPrice, maxPrice, search, page = 1, limit = 10 } = req.query;
+        const { category, minPrice, maxPrice, search, page = 1, limit = 8 } = req.query;
 
         let query = {};
         if (category) query.category = category;
-        if (search) query.name = { $regex: search, $options: 'i' };
+
+        if (search) {
+            const searchWords = search.trim().split(/\s+/);
+            
+            if (searchWords.length === 1) {
+                query.$or = [
+                    { name: { $regex: search, $options: 'i' } },
+                    { category: { $regex: search, $options: 'i' } },
+                    { tags: { $regex: search, $options: 'i' } },
+                    { description: { $regex: search, $options: 'i' } }
+                ];
+            } else {
+                query.$and = searchWords.map(word => ({
+                    $or: [
+                        { name: { $regex: word, $options: 'i' } },
+                        { category: { $regex: word, $options: 'i' } },
+                        { tags: { $regex: word, $options: 'i' } },
+                        { description: { $regex: word, $options: 'i' } }
+                    ]
+                }));
+            }
+        }
+
         if (minPrice || maxPrice) query.price = { ...(minPrice && { $gte: minPrice }), ...(maxPrice && { $lte: maxPrice }) };
 
         const skip = (page - 1) * limit;

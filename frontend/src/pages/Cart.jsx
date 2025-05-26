@@ -23,7 +23,7 @@ const Cart = () => {
 
     const handleRemove = async (productId) => {
         try{
-            await API.delete(`/cart/delete/${productId}`, { withCredentials: true });
+            await API.delete(`/cart/remove/${productId}`, { withCredentials: true });
             toast.success("Removed from cart");
             fetchCart();
         } catch(error){
